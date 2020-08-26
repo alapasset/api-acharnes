@@ -30,29 +30,29 @@ class BlizzardController {
     );
   }
 
-  public async getGuildRoster(req: Request, res: Response) {
+  public getGuildRoster = async (req: Request, res: Response) => {
     const data = await this.bnw.apiCall(`/data/wow/guild/${BlizzardController.realmSlug}/${BlizzardController.guildSlug}/roster`, 'Erreur lors de la récupération du roster');
     res.json(data)
   }
 
-  public async getGuildActivity(req: Request, res: Response) {
+  public getGuildActivity = async (req: Request, res: Response) => {
     const data = await this.bnw.apiCall(`/data/wow/guild/${BlizzardController.realmSlug}/${BlizzardController.guildSlug}/activity`, 'Erreur lors de la récupération de l\'activité');
     res.json(data)
   }
-  public async getGuildAchievements(req: Request, res: Response) {
+  public getGuildAchievements = async (req: Request, res: Response) => {
     const data = await this.bnw.apiCall(`/data/wow/guild/${BlizzardController.realmSlug}/${BlizzardController.guildSlug}/achievements`, 'Erreur lors de la récupération des haut-faits de guilde');
     res.json(data)
   }
-  public async getCharacterProfile(req: Request, res: Response) {
+  public getCharacterProfile = async (req: Request, res: Response) => {
     const data = await this.bnw.apiCall(`/profile/wow/character/${BlizzardController.realmSlug}/${req.params.username}`, 'Erreur lors de la récupération du profile d\'un joueur');
     res.json(data)
   }
-  public async getCharacterPvp(req: Request, res: Response) {
+  public getCharacterPvp = async (req: Request, res: Response) => {
     const data = await this.bnw.apiCall(`/profile/wow/character/${BlizzardController.realmSlug}/${req.params.username}/pvp-summary`, 'Erreur lors de la récupération du profile PvP d\'un joueur');
     res.json(data)
   }
 
-  public async getCharacterEncounters(req: Request, res: Response) {
+  public getCharacterEncounters = async (req: Request, res: Response) => {
     const data = await this.bnw.apiCall(`/profile/wow/character/${BlizzardController.realmSlug}/${req.params.username}/encounters/raids`, 'Erreur lors de la récupération des rencontres PvP d\'un joueur');
     res.json(data)
   }
