@@ -12,7 +12,7 @@ class Routes {
   public routes(app: express.Application): void {
     app.route('/')
       .get((request: Request, response: Response) => {
-        response.status(200).send({ message: "GET request successfully." })
+        response.status(200).send({ message: "Bienvenue sur l'API des décrépits acharnés" })
       })
 
     app.route('/blizzard/guild/roster')
@@ -26,6 +26,8 @@ class Routes {
       .get(this.BlizzardController.getCharacterProfile)
     app.route('/blizzard/character/:username/pvp')
       .get(this.BlizzardController.getCharacterPvp)
+    app.route('/blizzard/character/:username/encounters')
+      .get(this.BlizzardController.getCharacterEncounters)
   }
 }
 

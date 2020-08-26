@@ -2,31 +2,58 @@ import { Request, Response } from 'express';
 import BattleNetWrapper from '../connection/ConnectionToBlizzardApi';
 
 class BlizzardController {
+  private bnw: BattleNetWrapper;
+
+  static get realmSlug () {
+    return 'conseil-des-ombres';
+  }
+
+  static get guildSlug () {
+    return 'les-décrépits-acharnés';
+  }
+
+  static get APIParams () {
+    return {
+      clientId : '857d2ae231584258a032a0beecccc401',
+      clientSecret: 'nF1olK75acTT9vgjEPgjG4ZshB2uzrBD',
+      locale: 'fr_FR',
+      region: 'eu'
+    }
+  }
+
+  constructor() {
+    this.bnw = new BattleNetWrapper(
+      BlizzardController.APIParams.clientId,
+      BlizzardController.APIParams.clientSecret,
+      BlizzardController.APIParams.locale,
+      BlizzardController.APIParams.region
+    );
+  }
 
   public async getGuildRoster(req: Request, res: Response) {
-    const bnw = new BattleNetWrapper();
-    const data = await bnw.apiCall(`/data/wow/guild/${bnw.realmSlug}/${bnw.guildSlug}/roster`, 'Erreur lors de la récupération du roster');
+    const data = await this.bnw.apiCall(`/data/wow/guild/${BlizzardController.realmSlug}/${BlizzardController.guildSlug}/roster`, 'Erreur lors de la récupération du roster');
     res.json(data)
   }
 
   public async getGuildActivity(req: Request, res: Response) {
-    const bnw = new BattleNetWrapper();
-    const data = await bnw.apiCall(`/data/wow/guild/${bnw.realmSlug}/${bnw.guildSlug}/activity`, 'Erreur lors de la récupération de l\'activité');
+    const data = await this.bnw.apiCall(`/data/wow/guild/${BlizzardController.realmSlug}/${BlizzardController.guildSlug}/activity`, 'Erreur lors de la récupération de l\'activité');
     res.json(data)
   }
   public async getGuildAchievements(req: Request, res: Response) {
-    const bnw = new BattleNetWrapper();
-    const data = await bnw.apiCall(`/data/wow/guild/${bnw.realmSlug}/${bnw.guildSlug}/achievements`, 'Erreur lors de la récupération des haut-faits de guilde');
+    const data = await this.bnw.apiCall(`/data/wow/guild/${BlizzardController.realmSlug}/${BlizzardController.guildSlug}/achievements`, 'Erreur lors de la récupération des haut-faits de guilde');
     res.json(data)
   }
   public async getCharacterProfile(req: Request, res: Response) {
-    const bnw = new BattleNetWrapper();
-    const data = await bnw.apiCall(`/profile/wow/character/${bnw.realmSlug}/${req.params.username}`, 'Erreur lors de la récupération du profile d\'un joueur');
+    const data = await this.bnw.apiCall(`/profile/wow/character/${BlizzardController.realmSlug}/${req.params.username}`, 'Erreur lors de la récupération du profile d\'un joueur');
     res.json(data)
   }
   public async getCharacterPvp(req: Request, res: Response) {
-    const bnw = new BattleNetWrapper();
-    const data = await bnw.apiCall(`/profile/wow/character/${bnw.realmSlug}/${req.params.username}/pvp-summary`, 'Erreur lors de la récupération du profile PvP d\'un joueur');
+    const data = await this.bnw.apiCall(`/profile/wow/character/${BlizzardController.realmSlug}/${req.params.username}/pvp-summary`, 'Erreur lors de la récupération du profile PvP d\'un joueur');
+    res.json(data)
+  }
+
+  public async getCharacterEncounters(req: Request, res: Response) {
+    const data = await this.bnw.apiCall(`/profile/wow/character/${BlizzardController.realmSlug}/${req.params.username}/encounters/raids`, 'Erreur lors de la récupération des rencontres PvP d\'un joueur');
     res.json(data)
   }
 }
