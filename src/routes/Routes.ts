@@ -47,7 +47,6 @@ class Routes {
     app.route('/guild/roster')
     .get(async (req, res) => {
       const characters = await this.GuildController.getRoster()
-      console.log(characters)
       res.json(characters)
     })
     .put(async (req, res) => {
