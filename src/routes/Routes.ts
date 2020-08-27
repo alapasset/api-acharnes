@@ -1,12 +1,15 @@
 import express, { Request, Response } from "express"
 import { BlizzardController } from "../controller/blizzard"
+import { GuildController } from "../controller/guild"
 
 class Routes {
 
   private BlizzardController: BlizzardController
+  private GuildController: GuildController
 
   constructor() {
     this.BlizzardController = new BlizzardController()
+    this.GuildController = new GuildController()
   }
 
   public routes(app: express.Application): void {
@@ -16,18 +19,41 @@ class Routes {
       })
 
     app.route('/blizzard/guild/roster')
-      .get(this.BlizzardController.getGuildRoster)
+    .get(async (req, res) => {
+      res.json(await this.BlizzardController.getGuildRoster())
+    })
     app.route('/blizzard/guild/achievements')
-      .get(this.BlizzardController.getGuildAchievements)
+    .get(async (req, res) => {
+      res.json(await this.BlizzardController.getGuildAchievements())
+    })
     app.route('/blizzard/guild/activity')
-      .get(this.BlizzardController.getGuildActivity)
+    .get(async (req, res) => {
+      res.json(await this.BlizzardController.getGuildActivity())
+    })
 
-    app.route('/blizzard/character/:username/profile')
-      .get(this.BlizzardController.getCharacterProfile)
-    app.route('/blizzard/character/:username/pvp')
-      .get(this.BlizzardController.getCharacterPvp)
-    app.route('/blizzard/character/:username/encounters')
-      .get(this.BlizzardController.getCharacterEncounters)
+    app.route('/blizzard/character/:realm/:username/profile')
+    .get(async (req, res) => {
+      res.json(await this.BlizzardController.getCharacterProfile(req.params.realm, req.params.username))
+    })
+    app.route('/blizzard/character/:realm/:username/pvp')
+    .get(async (req, res) => {
+      res.json(await this.BlizzardController.getCharacterPvp(req.params.realm, req.params.username))
+    })
+    app.route('/blizzard/character/:realm/:username/encounters')
+    .get(async (req, res) => {
+      res.json(await this.BlizzardController.getCharacterEncounters(req.params.realm, req.params.username))
+    })
+
+    app.route('/guild/roster')
+    .get(async (req, res) => {
+      const characters = await this.GuildController.getRoster()
+      console.log(characters)
+      res.json(characters)
+    })
+    .put(async (req, res) => {
+      res.json(await this.GuildController.updateRoster())
+    })
+
   }
 }
 
