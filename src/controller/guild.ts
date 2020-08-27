@@ -32,7 +32,19 @@ class GuildController {
         guildRoster.push(await this.setCharacter(member.character, blizzardController))
       }
     }
-    return guildRoster
+    connectionToPostgres.then(async connection => {
+      await connection.createQueryBuilder()
+        .insert()
+        .into(Character)
+        .values(guildRoster)
+        .onConflict(`("idBlizzard") DO UPDATE SET "name" = excluded."name", "level" = excluded."level", "class" = excluded."class", "race" = excluded."race", "lastConnexion" = excluded."lastConnexion"`)
+        .execute()
+      return guildRoster
+    })
+    .catch(error => {
+      console.error("Error ", error)
+      throw new Error(error)
+    })
   }
 
   private async setCharacter(blizzardCharacter: BlizzardCharacter, blizzardController: BlizzardController): Promise<Character> {
