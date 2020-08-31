@@ -46,8 +46,7 @@ class Routes {
 
     app.route('/guild/roster')
     .get(async (req, res) => {
-      const characters = await this.GuildController.getRoster()
-      res.json(characters)
+      res.json(await this.GuildController.getRoster())
     })
     .put(async (req, res) => {
       res.json(await this.GuildController.updateRoster())
