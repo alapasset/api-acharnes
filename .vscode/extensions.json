@@ -1,0 +1,9 @@
+{
+  "recommendations": [
+    "christian-kohler.npm-intellisense",
+    "davidanson.vscode-markdownlint",
+    "dbaeumer.vscode-eslint",
+    "EditorConfig.editorconfig",
+    "yzhang.markdown-all-in-one"
+  ]
+}
