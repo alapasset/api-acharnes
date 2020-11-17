@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryColumn, UpdateDateColumn } from "typeorm"
+import { Column, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm'
 
 @Entity()
 export class Character {
@@ -28,7 +28,6 @@ export class Character {
 
   @UpdateDateColumn()
   public lastUpdate: Date
-
 }
 
 export default Character

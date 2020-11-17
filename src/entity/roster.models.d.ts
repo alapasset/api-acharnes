@@ -1,6 +1,6 @@
 export interface Roster {
   _link: {
-      self: Href
+    self: Href
   }
   guild: Guild
   members: BlizzardMember[]
@@ -26,7 +26,6 @@ interface PlayableClass {
   id: number
 }
 
-
 interface PlayableRace {
   key: Href
   id: number
@@ -41,7 +40,7 @@ interface Guild {
 }
 
 interface Realm {
-  key : Href
+  key: Href
   name: string
   id: number
   slug: string

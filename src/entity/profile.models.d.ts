@@ -51,7 +51,7 @@ export interface Profile {
   reputations: Href
   quests: Href
   achievements_statistics: Href
-  professions:Href
+  professions: Href
 }
 
 interface Guild {
@@ -63,7 +63,7 @@ interface Guild {
 }
 
 interface Realm {
-  key : Href
+  key: Href
   name: string
   id: number
   slug: string
