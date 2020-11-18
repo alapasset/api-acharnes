@@ -43,9 +43,9 @@ class Routes {
         response.json(await this.BlizzardController.getCharacterEncounters(request.params.realm, request.params.username))
       })
 
-    app.route('/guild/roster')
+    app.route('/guild/roster/:rankName*?')
       .get(async (request, response) => {
-        response.json(await this.GuildController.getRoster())
+        response.json(await this.GuildController.getRoster(request.params.rankName))
       })
       .put(async (request, response) => {
         response.json(await this.GuildController.updateRoster())

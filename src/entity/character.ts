@@ -26,6 +26,9 @@ export class Character {
   @Column()
   public gapOfVhSinceLastWeek: number
 
+  @Column()
+  public rank: number
+
   @UpdateDateColumn()
   public lastUpdate: Date
 }

@@ -18,21 +18,17 @@ class BattleNetWrapper {
   }
 
   async apiCall (apiUrl: string, errorMessage: string): Promise<object> {
-    try {
-      await this.setOAuthToken()
-      this.axiosConfig = {
-        baseURL: `https://${this.region}.api.blizzard.com`,
-        params: {
-          locale: this.locale,
-          namespace: `profile-${this.region}`,
-        },
-      }
-      this.axios.defaults.headers.common.Authorization = `Bearer ${this.oauthToken}`
-      const response = await this.axios.get(encodeURI(apiUrl), this.axiosConfig)
-      return response.data
-    } catch (error) {
-      throw new Error(error)
+    await this.setOAuthToken()
+    this.axiosConfig = {
+      baseURL: `https://${this.region}.api.blizzard.com`,
+      params: {
+        locale: this.locale,
+        namespace: `profile-${this.region}`,
+      },
     }
+    this.axios.defaults.headers.common.Authorization = `Bearer ${this.oauthToken}`
+    const response = await this.axios.get(encodeURI(apiUrl), this.axiosConfig)
+    return response.data
   }
 
   async linkApiCall (apiUrl: string, errorMessage: string): Promise<object> {

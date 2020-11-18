@@ -9,10 +9,33 @@ class GuildController {
     return 50
   }
 
-  public async getRoster () {
+  getRank (rankName: string) {
+    switch (rankName) {
+      case 'gm':
+        return 0
+      case 'cogm':
+        return 1
+      case 'recruteur':
+        return 2
+      case 'officier':
+        return 4
+      case 'veteran':
+        return 5
+      case 'champion':
+        return 6
+      case 'recrue':
+        return 7
+      case 'retaite':
+        return 8
+      default:
+        return -1
+    }
+  }
+
+  public async getRoster (rankName: string) {
     return new Promise((resolve, reject) => {
       connectionToPostgres.then(async connection => {
-        const characters: Character[] = await connection.getRepository(Character).find()
+        const characters: Character[] = await (rankName ? connection.getRepository(Character).find({ where: { rank: this.getRank(rankName) } }) : connection.getRepository(Character).find())
         resolve(characters)
       }).catch(error => {
         console.error(error)
@@ -27,9 +50,11 @@ class GuildController {
       const blizzardController: BlizzardController = new BlizzardController()
       const roster: Roster = (await blizzardController.getGuildRoster()) as Roster
       const guildRoster: Character[] = []
-      for await (const member of roster.members) {
+      for (const member of roster.members) {
         if (member.character.level === this.levelMax) {
-          guildRoster.push(await this.setCharacter(member.character, blizzardController))
+          const character = await this.setCharacter(member.character, blizzardController)
+          character.rank = member.rank
+          guildRoster.push(character)
         }
       }
       connectionToPostgres.then(async connection => {
@@ -64,11 +89,12 @@ class GuildController {
       characterProfile.gapOfVhSinceLastWeek = 0
       return characterProfile
     } catch (error) {
-      console.log('erreur APi')
-      if (error.type === 'BLZWEBAPI00000404') {
+      if (error.response.data.type === 'BLZWEBAPI00000404') {
         characterProfile.idBlizzard = blizzardCharacter.id
         characterProfile.name = blizzardCharacter.name
         characterProfile.level = blizzardCharacter.level
+        characterProfile.class = '?'
+        characterProfile.race = '?'
         characterProfile.lastConnexion = new Date(0)
         characterProfile.vh = 0
         characterProfile.gapOfVhSinceLastWeek = 0

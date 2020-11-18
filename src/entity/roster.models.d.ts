@@ -9,6 +9,7 @@ export interface Roster {
 
 export interface BlizzardMember {
   character: BlizzardCharacter
+  rank: number
 }
 
 export interface BlizzardCharacter {
@@ -19,7 +20,6 @@ export interface BlizzardCharacter {
   level: number
   playable_class: PlayableClass
   playable_race: PlayableRace
-
 }
 
 interface PlayableClass {
