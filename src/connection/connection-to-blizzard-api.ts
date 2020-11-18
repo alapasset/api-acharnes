@@ -31,8 +31,7 @@ class BattleNetWrapper {
       const response = await this.axios.get(encodeURI(apiUrl), this.axiosConfig)
       return response.data
     } catch (error) {
-      console.log(error)
-      throw new Error(`Blizzard API Call Error :: ${errorMessage}`)
+      throw new Error(error)
     }
   }
 

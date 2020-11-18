@@ -51,9 +51,9 @@ class GuildController {
   }
 
   private async setCharacter (blizzardCharacter: BlizzardCharacter, blizzardController: BlizzardController): Promise<Character> {
+    const characterProfile = new Character()
     try {
       const profile: Profile = await blizzardController.getCharacterProfile(blizzardCharacter.realm.slug, blizzardCharacter.name.toLocaleLowerCase()) as Profile
-      const characterProfile = new Character()
       characterProfile.idBlizzard = profile.id
       characterProfile.name = profile.name
       characterProfile.level = profile.level
@@ -64,7 +64,18 @@ class GuildController {
       characterProfile.gapOfVhSinceLastWeek = 0
       return characterProfile
     } catch (error) {
-      console.error(error)
+      console.log('erreur APi')
+      if (error.type === 'BLZWEBAPI00000404') {
+        characterProfile.idBlizzard = blizzardCharacter.id
+        characterProfile.name = blizzardCharacter.name
+        characterProfile.level = blizzardCharacter.level
+        characterProfile.lastConnexion = new Date(0)
+        characterProfile.vh = 0
+        characterProfile.gapOfVhSinceLastWeek = 0
+        return characterProfile
+      } else {
+        console.error(error)
+      }
     }
   }
 }
