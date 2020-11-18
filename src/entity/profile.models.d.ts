@@ -1,3 +1,4 @@
+/* eslint camelcase: 0 */
 export interface Profile {
   _link: {
     self: Href

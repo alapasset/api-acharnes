@@ -1,7 +1,7 @@
 import bodyParser from 'body-parser'
 import cors from 'cors'
 import express from 'express'
-import { Routes } from './routes/Routes'
+import { Routes } from './routes/routes'
 
 class App {
   public application: express.Application

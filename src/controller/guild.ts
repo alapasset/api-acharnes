@@ -1,6 +1,6 @@
 import { BlizzardCharacter, Roster } from 'entity/roster.models'
-import { connectionToPostgres } from '../connection/ConnectionToPostgres'
-import Character from '../entity/Character'
+import { connectionToPostgres } from '../connection/connection-to-postgres'
+import Character from '../entity/character'
 import { Profile } from '../entity/profile.models'
 import { BlizzardController } from './blizzard'
 

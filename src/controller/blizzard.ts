@@ -1,4 +1,4 @@
-import BattleNetWrapper from '../connection/ConnectionToBlizzardApi'
+import BattleNetWrapper from '../connection/connection-to-blizzard-api'
 
 class BlizzardController {
   private bnw: BattleNetWrapper

@@ -1,3 +1,4 @@
+/* eslint camelcase: 0 */
 export interface Roster {
   _link: {
     self: Href
