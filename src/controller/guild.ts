@@ -6,7 +6,7 @@ import { BlizzardController } from './blizzard'
 
 class GuildController {
   get levelMax () {
-    return 120
+    return 50
   }
 
   public async getRoster () {
