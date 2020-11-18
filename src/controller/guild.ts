@@ -67,7 +67,7 @@ class GuildController {
             .insert()
             .into(Character)
             .values(guildRoster)
-            .onConflict('("idBlizzard") DO UPDATE SET "name" = excluded."name", "level" = excluded."level", "class" = excluded."class", "race" = excluded."race", "lastConnexion" = excluded."lastConnexion"')
+            .onConflict('("idBlizzard") DO UPDATE SET "name" = excluded."name","rank" = excluded."rank", "level" = excluded."level", "class" = excluded."class", "race" = excluded."race", "lastConnexion" = excluded."lastConnexion"')
             .execute()
           return guildRoster
         } catch (error) {
