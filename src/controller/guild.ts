@@ -1,6 +1,6 @@
 import { BlizzardCharacter, Roster } from 'entity/roster.models'
 import { connectionToPostgres } from '../connection/connection-to-postgres'
-import Character from '../entity/character'
+import { Character } from '../entity/character'
 import { Profile } from '../entity/profile.models'
 import { BlizzardController } from './blizzard'
 
@@ -35,7 +35,11 @@ class GuildController {
   public async getRoster (rankName: string) {
     return new Promise((resolve, reject) => {
       connectionToPostgres.then(async connection => {
-        const characters: Character[] = await (rankName ? connection.getRepository(Character).find({ where: { rank: this.getRank(rankName) } }) : connection.getRepository(Character).find())
+        const characters: Character[] = await (
+          rankName
+            ? connection.getRepository(Character).find({ where: { rank: this.getRank(rankName) } })
+            : connection.getRepository(Character).find()
+        )
         resolve(characters)
       }).catch(error => {
         console.error(error)

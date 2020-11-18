@@ -1,4 +1,4 @@
-# blind-test-api
+# api-acharnés
 
 ## Project setup
 
@@ -9,5 +9,5 @@ npm install
 ### Start Server
 
 ```bash
-npm start
+npm run build && npm run start
 ```
